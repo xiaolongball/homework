@@ -1,0 +1,227 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "fb82c1a2",
+   "metadata": {},
+   "source": [
+    "# 📊 Pokémon 數據分析：敘述統計\n",
+    "---\n",
+    "## 🎯 這堂課的目標\n",
+    "1. 了解 **什麼是敘述統計？為什麼要用？**\n",
+    "2. 學會用 **Python 分析 Pokémon 數據**\n",
+    "3. 使用 `.info()` 和 `.describe()` 來獲取統計資訊\n",
+    "4. 視覺化數據，讓統計結果更清楚！\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c18a78a4",
+   "metadata": {},
+   "source": [
+    "## 🔍 什麼是敘述統計？\n",
+    "📌 **敘述統計（Descriptive Statistics）** 是用來 **整理、總結、描述** 一組數據的方法。  \n",
+    "舉個例子：\n",
+    "\n",
+    "- **如果老師想知道班上的數學成績如何？**\n",
+    "  - **平均分數（mean）** 可以告訴老師整體水準  \n",
+    "  - **最高分 & 最低分（max & min）** 讓老師知道學生的表現範圍  \n",
+    "  - **標準差（std）** 告訴老師成績的波動有多大  \n",
+    "\n",
+    "👉 **這些概念不只是數學，它們在資料分析中非常重要！**  \n",
+    "現在，我們來用 Pokémon 的資料，看看這些統計數據在現實中有什麼意義！\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5125fc29",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 載入 pandas, numpy 和 matplotlib\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "# 設定圖表風格\n",
+    "plt.style.use('fivethirtyeight')\n",
+    "\n",
+    "# 讀取 Pokémon 資料\n",
+    "df = pd.read_csv(\"pokemon_894_12.csv\", header=0)\n",
+    "\n",
+    "# 顯示前 5 筆資料\n",
+    "df.head()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "eed54e71",
+   "metadata": {},
+   "source": [
+    "## 🧐 了解數據結構：`.info()`\n",
+    "`.info()` 可以讓我們知道這個資料表的結構，例如：\n",
+    "- 總共有多少筆資料？\n",
+    "- 有哪些欄位？\n",
+    "- 每個欄位的數據型態是什麼？\n",
+    "- 是否有遺漏值（NaN）？\n",
+    "\n",
+    "來試試看！👇\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "af01f815",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 查看數據的基本資訊\n",
+    "df.info()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0a040407",
+   "metadata": {},
+   "source": [
+    "## 📊 取得 Pokémon 數據的統計摘要：`.describe()`\n",
+    "如果我們想知道 **寶可夢的 HP、攻擊力、防禦力等數值的分布**，我們可以用 `.describe()` 來查看：\n",
+    "- **平均值（mean）**：這些數值的平均是多少？\n",
+    "- **標準差（std）**：這些數值的變化範圍大嗎？\n",
+    "- **最小值 & 最大值（min & max）**：哪隻 Pokémon HP 最少？哪隻最多？\n",
+    "\n",
+    "讓我們來試試看！👇\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "68fdf9a9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 計算數值欄位的統計摘要（HP、Attack、Defense...）\n",
+    "df.loc[:, 'HP':'SpecialDef'].describe()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0cc9e283",
+   "metadata": {},
+   "source": [
+    "## 📈 視覺化 Pokémon 的 HP 分布\n",
+    "數字看起來可能有點抽象，我們來畫個圖看看！\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f367c9a5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 畫出 HP 的分布\n",
+    "plt.figure(figsize=(10,5))\n",
+    "plt.hist(df[\"HP\"], bins=20, color=\"skyblue\", edgecolor=\"black\")\n",
+    "plt.xlabel(\"HP 數值\")\n",
+    "plt.ylabel(\"寶可夢數量\")\n",
+    "plt.title(\"寶可夢 HP 數值分布\")\n",
+    "plt.show()\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d046873c",
+   "metadata": {},
+   "source": [
+    "## 🎯 挑戰題：自己試試看！\n",
+    "1️⃣ **找出攻擊力（Attack）的統計摘要**，看看哪隻 Pokémon 攻擊力最高！  \n",
+    "2️⃣ **畫出攻擊力的分布圖**，看看 Pokémon 的攻擊力是如何分布的！  \n",
+    "\n",
+    "👉 **試試看！** 🚀\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e6f208c7",
+   "metadata": {},
+   "source": [
+    "\n",
+    "# 🎯 挑戰題詳解\n",
+    "\n",
+    "這份教材的挑戰題有兩題，讓我們來一一拆解！\n",
+    "\n",
+    "---\n",
+    "\n",
+    "## **✅ 挑戰 1：找出攻擊力（Attack）的統計摘要**\n",
+    "📌 **題目要求**：  \n",
+    "> 使用 `.describe()` 找出 Pokémon **攻擊力（Attack）** 的統計摘要，看看哪隻 Pokémon **攻擊力最高！**\n",
+    "\n",
+    "### **🚀 解法**\n",
+    "```python\n",
+    "# 計算攻擊力（Attack）的統計摘要\n",
+    "df[\"Attack\"].describe()\n",
+    "```\n",
+    "\n",
+    "### **📌 解釋**\n",
+    "這行程式會輸出以下統計數據：\n",
+    "- **平均攻擊力（mean）**\n",
+    "- **最小攻擊力（min）**\n",
+    "- **最大攻擊力（max）**\n",
+    "- **攻擊力的標準差（std）**\n",
+    "\n",
+    "👉 **我們可以直接找出哪隻 Pokémon 擁有最高的攻擊力！** 🚀\n",
+    "\n",
+    "```python\n",
+    "# 找出攻擊力最高的 Pokémon\n",
+    "df.loc[df[\"Attack\"].idxmax(), [\"Name\", \"Attack\"]]\n",
+    "```\n",
+    "\n",
+    "✅ **這樣我們就能知道哪隻 Pokémon 擁有最強的攻擊力！**\n",
+    "\n",
+    "---\n",
+    "\n",
+    "## **✅ 挑戰 2：畫出攻擊力的分布圖**\n",
+    "📌 **題目要求**：  \n",
+    "> 繪製 **攻擊力（Attack）** 的直方圖，觀察 Pokémon 的攻擊力是如何分布的。\n",
+    "\n",
+    "### **🚀 解法**\n",
+    "```python\n",
+    "# 畫出攻擊力的分布圖\n",
+    "plt.figure(figsize=(10,5))\n",
+    "plt.hist(df[\"Attack\"], bins=20, color=\"lightcoral\", edgecolor=\"black\")\n",
+    "plt.xlabel(\"攻擊力（Attack）\")\n",
+    "plt.ylabel(\"寶可夢數量\")\n",
+    "plt.title(\"寶可夢攻擊力分布\")\n",
+    "plt.show()\n",
+    "```\n",
+    "\n",
+    "### **📌 解釋**\n",
+    "- `plt.hist()` 會幫我們畫出攻擊力的直方圖，看看哪些攻擊力範圍內的 Pokémon 最多。\n",
+    "- `bins=20` 代表我們把攻擊力的範圍切成 20 等分，讓圖形更清晰。\n",
+    "- `color=\"lightcoral\"` 讓圖表變成 **紅色系**，更直覺顯示攻擊強度。\n",
+    "\n",
+    "✅ **這樣我們就能清楚看到 Pokémon 的攻擊力大致分布在哪個範圍！** 🚀\n",
+    "\n",
+    "---\n",
+    "\n",
+    "## **📌 挑戰題總結**\n",
+    "| 題目 | 解法 |\n",
+    "|------|------|\n",
+    "| **找出攻擊力統計摘要** | `df[\"Attack\"].describe()` |\n",
+    "| **找出攻擊力最高的 Pokémon** | `df.loc[df[\"Attack\"].idxmax(), [\"Name\", \"Attack\"]]` |\n",
+    "| **畫出攻擊力分布圖** | `plt.hist(df[\"Attack\"], bins=20, color=\"lightcoral\", edgecolor=\"black\")` |\n",
+    "\n",
+    "📌 **這些方法可以讓我們更直觀地分析 Pokémon 的能力，這也是數據分析的重要步驟！** 🚀\n",
+    "\n",
+    "---\n",
+    "\n",
+    "這樣應該清楚了吧？😆 現在來試試看！\n"
+   ]
+  }
+ ],
+ "metadata": {},
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
